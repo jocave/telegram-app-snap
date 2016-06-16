@@ -1,0 +1,27 @@
+name: telegram-app
+version: 1
+summary: A Telegram client
+description: |
+  This Telegram client is based on the Ubuntu SDK
+confinement: devmode
+
+parts:
+    libqtelegram-ae:
+      plugin: x-qmake
+      qt-version: qt5
+      source-type: git
+      source: https://github.com/Aseman-Land/libqtelegram-aseman-edition.git
+    telegramqml:
+      plugin: x-qmake
+      qt-version: qt5
+      source-type: git
+      source: https://github.com/Aseman-Land/TelegramQML.git
+      after: [libqtelegram-ae]
+      options:
+        - LIBQTELEGRAM_INCLUDE_PATH=$SNAPCRAFT_STAGE$QT_INSTALL_HEADERS/libqtelegram-ae
+    telegram-app:
+      plugin: x-qmake
+      qt-version: qt5
+      source-type: bzr
+      source: lp:telegram-app
+      after: [telegramqml]
