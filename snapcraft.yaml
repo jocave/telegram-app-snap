@@ -7,21 +7,43 @@ confinement: devmode
 
 parts:
     libqtelegram-ae:
-      plugin: x-qmake
+      plugin: qmake
       qt-version: qt5
       source-type: git
       source: https://github.com/Aseman-Land/libqtelegram-aseman-edition.git
+      options:
+        - -r
+        - PREFIX=/usr
     telegramqml:
-      plugin: x-qmake
+      plugin: qmake
       qt-version: qt5
       source-type: git
       source: https://github.com/Aseman-Land/TelegramQML.git
       after: [libqtelegram-ae]
       options:
-        - LIBQTELEGRAM_INCLUDE_PATH=$SNAPCRAFT_STAGE$QT_INSTALL_HEADERS/libqtelegram-ae
+        - -r
+        - PREFIX=/usr
+        - BUILD_MODE+=lib
+        - DEFINES+=UBUNTU_PHONE
+        - INCLUDEPATH+=/usr/include/thumbnailer-qt-1.0/unity/thumbnailer/qt
+        - LIBQTELEGRAM_INCLUDE_PATH=$SNAPCRAFT_STAGE/usr/include/libqtelegram-ae
+        - LIBS+=-L$SNAPCRAFT_STAGE/usr/lib/x86_64-linux-gnu
+        - LIBS+=-lthumbnailer-qt
+      build-packages:
+        - libthumbnailer-qt-dev
     telegram-app:
-      plugin: x-qmake
+      plugin: qmake
       qt-version: qt5
-      source-type: bzr
-      source: lp:telegram-app
+      #source-type: bzr
+      #source: lp:telegram-app
+      source: /home/joc/Code/telegram-app
+      source-subdir: telegram
       after: [telegramqml]
+      options:
+        - -r
+        - PREFIX=/usr
+        - INCLUDEPATH+=/usr/include/thumbnailer-qt-1.0/unity/thumbnailer/qt
+        - INCLUDEPATH+=$SNAPCRAFT_STAGE/usr/include/libqtelegram-ae
+        - INCLUDEPATH+=$SNAPCRAFT_STAGE/usr/include/telegramqml
+      build-packages:
+        - libthumbnailer-qt-dev
