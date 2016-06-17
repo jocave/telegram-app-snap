@@ -5,6 +5,11 @@ description: |
   This Telegram client is based on the Ubuntu SDK
 confinement: devmode
 
+apps:
+  telegram-app:
+    command: bin/telegram-app.wrapper
+    plugs: [network-bind]
+
 parts:
     libqtelegram-ae:
       plugin: qmake
@@ -45,3 +50,14 @@ parts:
         - INCLUDEPATH+=$SNAPCRAFT_STAGE/usr/include/telegramqml
       build-packages:
         - libthumbnailer-qt-dev
+      stage-packages:
+        - ubuntu-sdk-libs
+        - qtubuntu-desktop
+      snap:
+        - -usr/share/doc
+        - -usr/include
+    environment:
+      plugin: copy
+      files:
+        telegram-app.wrapper: bin/telegram-app.wrapper
+        snappy-qt5.conf: etc/xdg/qtchooser/snappy-qt5.conf
