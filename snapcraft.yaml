@@ -27,16 +27,14 @@ parts:
         - DEFINES+=UBUNTU_PHONE
         - INCLUDEPATH+=/usr/include/thumbnailer-qt-1.0/unity/thumbnailer/qt
         - LIBQTELEGRAM_INCLUDE_PATH=$SNAPCRAFT_STAGE/usr/include/libqtelegram-ae
-        - LIBS+=-L$SNAPCRAFT_STAGE/usr/lib/x86_64-linux-gnu
         - LIBS+=-lthumbnailer-qt
       build-packages:
         - libthumbnailer-qt-dev
     telegram-app:
       plugin: qmake
       qt-version: qt5
-      #source-type: bzr
-      #source: lp:telegram-app
-      source: /home/joc/Code/telegram-app
+      source-type: bzr
+      source: lp:~jocave/telegram-app/snapping-fixes
       source-subdir: telegram
       after: [telegramqml]
       options:
