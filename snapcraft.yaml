@@ -53,6 +53,8 @@ parts:
       stage-packages:
         - ubuntu-sdk-libs
         - qtubuntu-desktop
+        - qml-module-ubuntu-connectivity
+        - qtdeclarative5-ubuntu-contacts0.1
       snap:
         - -usr/share/doc
         - -usr/include
